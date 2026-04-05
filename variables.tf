@@ -8,3 +8,8 @@ variable "location" {
   type        = string
   default     = "uksouth"
 }
+variable "vnet_name" {
+    description = "name of virtual netowrk"
+    type = string
+}
+
