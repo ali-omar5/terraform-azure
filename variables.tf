@@ -18,3 +18,8 @@ variable "subnet_name" {
     description = "name of subnet"
     type = string
 }
+
+variable "nsg_name" {
+  description = "name of NSG"
+  type = string
+}
