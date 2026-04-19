@@ -33,10 +33,11 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
-  name                 = var.subnet_name
+  for_each =var.subnets
+  name                 = "subnet-${each.key}"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
+  address_prefixes     = [each.value]
 }
 
 resource "azurerm_network_security_group" "nsg" {
@@ -58,7 +59,7 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 resource "azurerm_subnet_network_security_group_association" "nsg_assoc" {
-  subnet_id                 = azurerm_subnet.subnet.id
+  subnet_id = azurerm_subnet.subnet["web"].id
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 output "resource_group_name" {
@@ -70,5 +71,5 @@ output "vnet_id" {
 }
 
 output "subnet_id" {
-value = azurerm_subnet.subnet.id
+value = azurerm_subnet.subnet["web"].id
 }

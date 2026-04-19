@@ -23,3 +23,8 @@ variable "nsg_name" {
   description = "name of NSG"
   type = string
 }
+
+variable "subnets" {
+  description = "Map of subnet names to address prefixes"
+  type = map (string)
+}
